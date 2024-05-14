@@ -29,6 +29,13 @@ public class PaymentService {
 		repository.save(payment);
 	}
 	
+	public Payment confirmPayment(Long id) {
+		var payment = repository.getReferenceById(id);
+		payment.setStatus(PaymentStatus.CONFIRMED);
+		
+		return payment;
+	}
+	
 	//admin
 	public Page<PaymentDTO> getAllByParams(
 			Pageable pageable,
