@@ -20,4 +20,10 @@ public class PaymentListener {
 	public void receiveQueueMessagesOrder(@Payload PaymentDTO dto) {
 		service.createPayment(dto);
 	}
+	
+	@RabbitListener(queues = "pagamentos.cancelamento-pedido")
+	@Transactional
+	public void receiveEventMessage(@Payload Long orderId) {
+		service.cancelPayment(orderId);
+	}
 }
