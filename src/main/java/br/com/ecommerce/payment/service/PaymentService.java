@@ -1,6 +1,10 @@
 package br.com.ecommerce.payment.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.ecommerce.payment.model.Payment;
@@ -23,5 +27,24 @@ public class PaymentService {
 				PaymentStatus.AWAITING);
 		
 		repository.save(payment);
+	}
+	
+	//admin
+	public Page<PaymentDTO> getAllByParams(
+			Pageable pageable,
+			Long paymentId,
+			Long orderId,
+			Long userId,
+			BigDecimal paymentAmount, 
+			PaymentStatus status) {
+		
+		return repository.findAllByParams(
+				pageable,
+				paymentId,
+				orderId,
+				userId,
+				paymentAmount,
+				status)
+				.map(p -> new PaymentDTO(p));
 	}
 }
