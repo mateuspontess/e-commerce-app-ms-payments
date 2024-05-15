@@ -36,6 +36,13 @@ public class PaymentService {
 		return payment;
 	}
 	
+	public Payment cancelPayment(Long id) {
+		var payment = repository.getReferenceById(id);
+		payment.setStatus(PaymentStatus.CANCELED);
+		
+		return payment;
+	}
+	
 	//admin
 	public Page<PaymentDTO> getAllByParams(
 			Pageable pageable,
