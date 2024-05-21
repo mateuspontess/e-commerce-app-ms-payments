@@ -31,14 +31,14 @@ public class PaymentService {
 	
 	public Payment confirmPayment(Long id) {
 		var payment = repository.getReferenceById(id);
-		payment.setStatus(PaymentStatus.CONFIRMED);
+		payment.updatePaymentStatus(PaymentStatus.CONFIRMED);
 		
 		return payment;
 	}
 	
 	public Payment cancelPayment(Long id) {
 		var payment = repository.getReferenceById(id);
-		payment.setStatus(PaymentStatus.CANCELED);
+		payment.updatePaymentStatus(PaymentStatus.CANCELED);
 		
 		return payment;
 	}
