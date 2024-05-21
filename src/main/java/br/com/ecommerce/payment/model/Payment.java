@@ -34,9 +34,27 @@ public class Payment {
 
 	
 	public Payment(Long orderId, Long userId, BigDecimal paymentAmount, PaymentStatus status) {
+		checkNotNull(orderId, "orderId");
+		checkNotNull(userId, "userId");
+		checkNotNull(paymentAmount, "paymentAmount");
+		checkNotNull(status, "status");
+		
 		this.orderId = orderId;
 		this.userId = userId;
 		this.paymentAmount = paymentAmount;
 		this.status = status;
+	}
+	
+	private void checkNotNull(Object attribute, String attributeName) {
+		if (attribute == null) 
+			throw new IllegalArgumentException("Cannot be null: " + attributeName);
+		
+	}
+	
+	public void updatePaymentStatus(PaymentStatus newStatus) {
+		if(this.status == PaymentStatus.CANCELED) 
+			throw new IllegalArgumentException("Canceled payments cannot be changed");
+		
+		this.status = newStatus;
 	}
 }
