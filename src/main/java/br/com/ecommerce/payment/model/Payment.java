@@ -9,14 +9,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @ToString
+@Builder
+@AllArgsConstructor
 @Entity(name = "Payment")
 @Table(name = "payments")
 public class Payment {
@@ -28,30 +31,34 @@ public class Payment {
 	private Long userId;
 	private BigDecimal paymentAmount;
 	
-	@Setter
 	@Enumerated(EnumType.STRING)
 	private PaymentStatus status;
 
 	
-	public Payment(Long orderId, Long userId, BigDecimal paymentAmount, PaymentStatus status) {
-		checkNotNull(orderId, "orderId");
-		checkNotNull(userId, "userId");
-		checkNotNull(paymentAmount, "paymentAmount");
-		checkNotNull(status, "status");
+	public Payment(Long orderId, Long userId, BigDecimal paymentAmount) {
+		this.checkNotNull(orderId, "orderId");
+		this.checkNotNull(userId, "userId");
+		this.checkPaymentAmount(paymentAmount);
 		
 		this.orderId = orderId;
 		this.userId = userId;
 		this.paymentAmount = paymentAmount;
-		this.status = status;
+		this.status = PaymentStatus.AWAITING;
 	}
-	
+
 	private void checkNotNull(Object attribute, String attributeName) {
 		if (attribute == null) 
 			throw new IllegalArgumentException("Cannot be null: " + attributeName);
-		
+	}
+	private void checkPaymentAmount(BigDecimal paymentAmount) {
+		this.checkNotNull(paymentAmount, "paymentAmount");
+		if (paymentAmount.compareTo(BigDecimal.ZERO) <= 0) {
+			throw new IllegalArgumentException("Payment amount must be a positive value");
+		}
 	}
 
 	public void updatePaymentStatus(PaymentStatus newStatus) {
+		this.checkNotNull(newStatus, "status");
 		if(this.status == PaymentStatus.CANCELED) 
 			throw new IllegalArgumentException("Canceled payments cannot be changed");
 		
