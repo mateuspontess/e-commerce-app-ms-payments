@@ -23,8 +23,7 @@ public class PaymentService {
 		Payment payment = new Payment(
 				dto.orderId(), 
 				dto.userId(), 
-				dto.paymentAmount(), 
-				PaymentStatus.AWAITING);
+				dto.paymentAmount());
 		
 		repository.save(payment);
 	}
