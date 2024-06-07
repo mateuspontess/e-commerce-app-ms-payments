@@ -94,7 +94,7 @@ class PaymentServiceTest {
     }
 
     private Payment getPaymentMock(PaymentStatus status) {
-        return new Payment().builder()
+        return Payment.builder()
             .orderId(1L)
             .userId(1L)
             .status(status)

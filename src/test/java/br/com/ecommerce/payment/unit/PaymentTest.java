@@ -38,7 +38,7 @@ class PaymentTest {
     @Test
     @DisplayName("Update payment status - Cannot update from Canceled state")
     void updatePaymentStatusTest01() {
-        Payment payment = new Payment().builder()
+        Payment payment = Payment.builder()
                 .orderId(1L)
                 .userId(1L)
                 .status(PaymentStatus.CANCELED)
@@ -52,7 +52,7 @@ class PaymentTest {
     @Test
     @DisplayName("Update payment status - Allowed update from Awaiting state")
     void updatePaymentStatusTest02() {
-        Payment payment = new Payment().builder()
+        Payment payment = Payment.builder()
                 .orderId(1L)
                 .userId(1L)
                 .status(PaymentStatus.AWAITING)

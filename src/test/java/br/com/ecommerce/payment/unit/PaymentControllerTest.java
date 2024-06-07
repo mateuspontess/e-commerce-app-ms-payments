@@ -79,6 +79,6 @@ class PaymentControllerTest {
 			).andReturn().getResponse();
 
 		// assert
-		assertEquals(HttpStatus.OK.value(), 200);
+		assertEquals(HttpStatus.OK.value(), result.getStatus());
 	}
 }
