@@ -6,6 +6,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -26,6 +27,11 @@ public class GlobalExceptionHandler {
         				INTERNAL_SERVER_ERROR_MESSAGE));
     }
 
+	@ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<?> handleError404(NoResourceFoundException ex) {
+    	return ResponseEntity.notFound().build();
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessageWithFields> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
     	var fields = ex.getFieldErrors().stream()
@@ -39,6 +45,11 @@ public class GlobalExceptionHandler {
     			.badRequest()
     			.body(response);
     }
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ErrorMessage> handlerErro400(IllegalArgumentException ex) {
+		return ResponseEntity.badRequest().body(new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+	}
 
     @ExceptionHandler(EntityNotFoundException.class)
 	public ResponseEntity<ErrorMessage> handlerEntityNotFoundException(EntityNotFoundException ex) {
