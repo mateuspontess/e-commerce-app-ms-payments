@@ -15,11 +15,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@NoArgsConstructor
-@Getter
-@ToString
 @Builder
 @AllArgsConstructor
+@Getter
+@ToString
+@NoArgsConstructor
 @Entity(name = "Payment")
 @Table(name = "payments")
 public class Payment {
