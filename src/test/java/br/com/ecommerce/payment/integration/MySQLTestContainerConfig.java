@@ -11,7 +11,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @TestConfiguration
-public class TestContainerConfig {
+public class MySQLTestContainerConfig {
 
     @Bean
     public MySQLContainer<?> mysqlContainer() {

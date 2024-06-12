@@ -3,7 +3,6 @@ package br.com.ecommerce.payment.integration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -23,7 +22,7 @@ import br.com.ecommerce.payment.repository.PaymentRepository;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@Import(TestContainerConfig.class)
+@Import(MySQLTestContainerConfig.class)
 class PaymentRepositoryTest {
 
     @Autowired
