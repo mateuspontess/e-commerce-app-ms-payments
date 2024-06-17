@@ -3,7 +3,10 @@ package br.com.ecommerce.payment.unit;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -30,33 +33,51 @@ class PaymentServiceTest {
     private PaymentService service;
 
     @Test
-    @DisplayName("Create Payment with valid PaymentDTO should not throw exception")
+    @DisplayName("Unit - createPayment - With valid PaymentDTO should not throw exception")
     void createPaymentTest01() {
         // act and assert
         assertDoesNotThrow( 
-            () -> service.createPayment(new PaymentDTO(1L, 1L, BigDecimal.TEN)));
+            () -> {
+                service.createPayment(new PaymentDTO(1L, 1L, BigDecimal.TEN));
+                verify(repository).save(any());
+            });
     }
     @Test
-    @DisplayName("Create Payment with negative amount should throw IllegalArgumentException")
+    @DisplayName("Unit - createPayment - With negative amount should throw IllegalArgumentException")
     void createPaymentTest02() {
         // act and assert
         assertThrows(IllegalArgumentException.class, 
-            () -> service.createPayment(new PaymentDTO(1L, 1L, new BigDecimal("-10"))));
-    }
-    @Test
-    @DisplayName("Create Payment with null values in PaymentDTO should throw IllegalArgumentException")
-    void createPaymentTest03() {
-        // act and assert
-        assertThrows(IllegalArgumentException.class, 
-            () -> service.createPayment(new PaymentDTO(null, 1L, BigDecimal.TEN)));
-        assertThrows(IllegalArgumentException.class, 
-            () -> service.createPayment(new PaymentDTO(1L, null, BigDecimal.TEN)));
-        assertThrows(IllegalArgumentException.class, 
-            () -> service.createPayment(new PaymentDTO(1L, 1L, null)));
+            () -> {
+                service.createPayment(new PaymentDTO(1L, 1L, new BigDecimal("-10")));
+                verifyNoInteractions(repository);
+            });
     }
 
     @Test
-    @DisplayName("Confirm payment - Successful confirmation for awaiting payment")
+    @DisplayName("Unit - createPayment - With null values in PaymentDTO should throw IllegalArgumentException")
+    void createPaymentTest03() {
+        // act and assert
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    service.createPayment(new PaymentDTO(null, 1L, BigDecimal.TEN));
+                    verifyNoInteractions(repository);
+                });
+
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    service.createPayment(new PaymentDTO(1L, null, BigDecimal.TEN));
+                    verifyNoInteractions(repository);
+                });
+
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    service.createPayment(new PaymentDTO(1L, 1L, null));
+                    verifyNoInteractions(repository);
+                });
+    }
+
+    @Test
+    @DisplayName("Unit - confirmPayment - Successful confirmation for awaiting payment")
     void confirmPaymentTest01() {
         // arrange
         Payment payment = this.getPaymentMock(PaymentStatus.AWAITING);
@@ -69,7 +90,7 @@ class PaymentServiceTest {
         assertEquals(payment, result);
     }
     @Test
-    @DisplayName("Confirm payment - Throws exception for canceled payment")
+    @DisplayName("Unit - confirmPayment - Throws exception for canceled payment")
     void confirmPaymentTest02() {
         // arrange
         Payment payment = this.getPaymentMock(PaymentStatus.CANCELED);
@@ -80,7 +101,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    @DisplayName("Cancel payment - Successfully updates status to canceled")
+    @DisplayName("Unit - cancelPayment - Successfully updates status to canceled")
     void cancelPaymentTest01() {
         // arrange
         Payment payment = this.getPaymentMock(PaymentStatus.AWAITING);
