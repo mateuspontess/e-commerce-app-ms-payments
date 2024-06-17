@@ -61,7 +61,7 @@ class PaymentRepositoryTest {
     }
 
     @Test
-    @DisplayName("Should find 2 records by ID")
+    @DisplayName("Integration - findAllByParams - Should find 2 records by ID")
     void findAllByParamsTest01() {
         var result = repository.findAllByParams(PageRequest.of(0, 35), 1L, null, null, null, null)
             .getContent();
@@ -75,7 +75,7 @@ class PaymentRepositoryTest {
     }
     
     @Test
-    @DisplayName("Should find 2 records by orderId")
+    @DisplayName("Integration - findAllByParams - Should find 2 records by orderId")
     void findAllByParamsTest02() {
         var result = repository.findAllByParams(PageRequest.of(0, 35), null, 1L, null, null, null)
             .getContent();
@@ -84,7 +84,7 @@ class PaymentRepositoryTest {
     }
 
     @Test
-    @DisplayName("Should find 2 records by userId")
+    @DisplayName("Integration - findAllByParams - Should find 2 records by userId")
     void findAllByParamsTest03() {
         var result = repository.findAllByParams(PageRequest.of(0, 35), null, null, 1L, null, null)
             .getContent();
@@ -93,7 +93,7 @@ class PaymentRepositoryTest {
     }
 
     @Test
-    @DisplayName("Should find 2 records by paymentAmount")
+    @DisplayName("Integration - findAllByParams - Should find 2 records by paymentAmount")
     void findAllByParamsTest04() {
         var result = repository.findAllByParams(PageRequest.of(0, 35), null, null, null, new BigDecimal("1"), null)
             .getContent();
@@ -102,7 +102,7 @@ class PaymentRepositoryTest {
     }
     
     @Test
-    @DisplayName("Should find 2 records by status")
+    @DisplayName("Integration - findAllByParams - Should find 2 records by status")
     void findAllByParamsTest05() {
         var result = repository.findAllByParams(PageRequest.of(0, 35), null, null, null, null, PaymentStatus.AWAITING)
             .getContent();
@@ -111,7 +111,7 @@ class PaymentRepositoryTest {
     }
 
     @Test
-    @DisplayName("Should find 2 records by userId, paymentAmount and status")
+    @DisplayName("Integration - findAllByParams - Should find 2 records by userId, paymentAmount and status")
     void findAllByParamsTest06() {
         var result = repository.findAllByParams(PageRequest.of(0, 35), null, null, 100L, new BigDecimal("1000"), PaymentStatus.CANCELED)
             .getContent();
@@ -120,7 +120,7 @@ class PaymentRepositoryTest {
     }
 
     @Test
-    @DisplayName("Must find a record with all parameters")
+    @DisplayName("Integration - findAllByParams - Must find a record with all parameters")
     void findAllByParamsTest07() {
         var result = repository.findAllByParams(PageRequest.of(0, 35), 1L, 300L, 300L, new BigDecimal("5000"), PaymentStatus.CONFIRMED)
             .getContent();
