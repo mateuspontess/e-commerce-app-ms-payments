@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PaymentStatus {
 
-    AWAITING("payment"),
+    AWAITING("awaiting"),
     CONFIRMED("confirmed"),
     CANCELED("canceled");
 	
 	private String status;
 	
 	PaymentStatus(String status){
-		this.status = status;
+		this.status = status.toUpperCase();
 	}
 	
 	@JsonValue
