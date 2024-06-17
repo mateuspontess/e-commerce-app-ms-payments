@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import br.com.ecommerce.payment.model.Payment;
 import br.com.ecommerce.payment.model.PaymentStatus;
 
-class PaymentTest {
+class PaymentUnitTest {
 
     @Test
     @DisplayName("Unit - createPayment - With valid values should not throw exception")

@@ -30,7 +30,7 @@ import br.com.ecommerce.payment.service.PaymentService;
 
 @WebMvcTest(PaymentController.class)
 @AutoConfigureJsonTesters
-class PaymentControllerTest {
+class PaymentControllerUnitTest {
 
 	@Autowired
 	private MockMvc mvc;

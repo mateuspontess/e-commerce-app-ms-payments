@@ -23,7 +23,7 @@ import br.com.ecommerce.payment.repository.PaymentRepository;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Import(MySQLTestContainerConfig.class)
-class PaymentRepositoryTest {
+class PaymentRepositoryIntegrationTest {
 
     @Autowired
     private PaymentRepository repository;

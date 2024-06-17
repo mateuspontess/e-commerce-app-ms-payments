@@ -25,7 +25,7 @@ import br.com.ecommerce.payment.repository.PaymentRepository;
 import br.com.ecommerce.payment.service.PaymentService;
 
 @ExtendWith(MockitoExtension.class)
-class PaymentServiceTest {
+class PaymentServiceUnitTest {
 
     @Mock
     private PaymentRepository repository;
