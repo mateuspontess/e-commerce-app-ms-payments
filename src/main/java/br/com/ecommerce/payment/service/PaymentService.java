@@ -21,9 +21,9 @@ public class PaymentService {
 	
 	public void createPayment(PaymentDTO dto) {
 		Payment payment = new Payment(
-				dto.orderId(), 
-				dto.userId(), 
-				dto.paymentAmount());
+			dto.orderId(), 
+			dto.userId(), 
+			dto.paymentAmount());
 		
 		repository.save(payment);
 	}
@@ -52,12 +52,12 @@ public class PaymentService {
 			PaymentStatus status) {
 		
 		return repository.findAllByParams(
-				pageable,
-				paymentId,
-				orderId,
-				userId,
-				paymentAmount,
-				status)
-				.map(p -> new PaymentDTO(p));
+			pageable,
+			paymentId,
+			orderId,
+			userId,
+			paymentAmount,
+			status)
+			.map(p -> new PaymentDTO(p));
 	}
 }

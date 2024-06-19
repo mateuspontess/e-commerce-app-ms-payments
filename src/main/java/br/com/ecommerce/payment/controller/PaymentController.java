@@ -34,12 +34,13 @@ public class PaymentController {
 	
 	@GetMapping
 	public ResponseEntity<Page<PaymentDTO>> getAll(
-			@PageableDefault(size = 10) Pageable pageable,
-			@RequestParam(required = false) Long paymentId, 
-			@RequestParam(required = false) Long orderId, 
-			@RequestParam(required = false) Long userId, 
-			@RequestParam(required = false) BigDecimal paymentAmount, 
-			@RequestParam(required = false) PaymentStatus status) {
+		@PageableDefault(size = 10) Pageable pageable,
+		@RequestParam(required = false) Long paymentId, 
+		@RequestParam(required = false) Long orderId, 
+		@RequestParam(required = false) Long userId, 
+		@RequestParam(required = false) BigDecimal paymentAmount, 
+		@RequestParam(required = false) PaymentStatus status
+		) {
 		
 		Page<PaymentDTO> payments = service.getAllByParams(pageable, paymentId, orderId, userId, paymentAmount, status);
 		return ResponseEntity.ok(payments);
