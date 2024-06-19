@@ -52,9 +52,9 @@ public class PaymentAMQPConfig {
         @Bean
         Binding bindOrdersWithPayments() {
         	return BindingBuilder
-        			.bind(this.queuePayments())
-        			.to(this.directExchangeCreateOrder())
-        			.with("payment");
+				.bind(this.queuePayments())
+				.to(this.directExchangeCreateOrder())
+				.with("payment");
         }
         
 		@Bean
@@ -68,13 +68,13 @@ public class PaymentAMQPConfig {
         @Bean
         Binding bindingCancelWithOrder() {
         	return BindingBuilder
-        			.bind(this.queueCancelOrder())
-        			.to(this.directExchangeCancelOrder())
-        			.with("cancellation");
+				.bind(this.queueCancelOrder())
+				.to(this.directExchangeCancelOrder())
+				.with("cancellation");
         }
     }
 
-    // Classe interna estática para configuração do sender
+    // static internal class for sender configuration
     static class Sender {
     	@Bean
     	FanoutExchange fanoutExchangePayments() {
