@@ -2,6 +2,8 @@ package br.com.ecommerce.payment.unit;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -25,6 +27,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import br.com.ecommerce.payment.controller.PaymentController;
 import br.com.ecommerce.payment.model.Payment;
+import br.com.ecommerce.payment.model.PaymentConfirmDTO;
 import br.com.ecommerce.payment.model.PaymentDTO;
 import br.com.ecommerce.payment.service.PaymentService;
 
@@ -47,12 +50,21 @@ class PaymentControllerUnitTest {
 		Page<PaymentDTO> mockValueReturned = new PageImpl<>(List.of(new PaymentDTO(1L, 1L, BigDecimal.TEN)));
 		when(service.getAllByParams(any(), any(), any(), any(), any(), any())).thenReturn(mockValueReturned);
 
+		var EXPECTED_ORDER_ID = mockValueReturned.getContent().get(0).orderId();
+		var EXPECTED_USER_ID = mockValueReturned.getContent().get(0).userId();
+		var EXPECTED_PAYMENT_AMOUNT = mockValueReturned.getContent().get(0).paymentAmount();
+
 		// act
-		mvc.perform(get("/payments")
-			.contentType(MediaType.APPLICATION_JSON)
-			)
-			.andExpect(status().isOk())
-			.andExpect(jsonPath("$.content").isArray());
+		mvc.perform(
+			get("/payments")
+				.contentType(MediaType.APPLICATION_JSON)
+		)
+		// assert
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.content").isArray())
+		.andExpect(jsonPath("$.content[0].orderId").value(EXPECTED_ORDER_ID))
+		.andExpect(jsonPath("$.content[0].userId").value(EXPECTED_USER_ID))
+		.andExpect(jsonPath("$.content[0].paymentAmount").value(EXPECTED_PAYMENT_AMOUNT));
 	}
 
 	@Test
@@ -62,9 +74,14 @@ class PaymentControllerUnitTest {
 		when(service.confirmPayment(anyLong())).thenReturn(mockValueReturned);
 
 		// act
-		mvc.perform(patch("/payments/1")
-			.contentType(MediaType.APPLICATION_JSON)
-			)
-			.andExpect(status().isOk());
+		mvc.perform(
+			patch("/payments/1")
+				.contentType(MediaType.APPLICATION_JSON)
+		)
+		// assert
+		.andExpect(status().isOk());
+
+		verify(service).confirmPayment(anyLong());
+		verify(template).convertAndSend(anyString(), anyString(), any(PaymentConfirmDTO.class));
 	}
 }
