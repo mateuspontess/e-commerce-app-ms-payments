@@ -58,22 +58,22 @@ class PaymentServiceUnitTest {
     void createPaymentTest03() {
         // act and assert
         assertThrows(IllegalArgumentException.class,
-                () -> {
-                    service.createPayment(new PaymentDTO(null, 1L, BigDecimal.TEN));
-                    verifyNoInteractions(repository);
-                });
+            () -> {
+                service.createPayment(new PaymentDTO(null, 1L, BigDecimal.TEN));
+                verifyNoInteractions(repository);
+            });
 
         assertThrows(IllegalArgumentException.class,
-                () -> {
-                    service.createPayment(new PaymentDTO(1L, null, BigDecimal.TEN));
-                    verifyNoInteractions(repository);
-                });
+            () -> {
+                service.createPayment(new PaymentDTO(1L, null, BigDecimal.TEN));
+                verifyNoInteractions(repository);
+            });
 
         assertThrows(IllegalArgumentException.class,
-                () -> {
-                    service.createPayment(new PaymentDTO(1L, 1L, null));
-                    verifyNoInteractions(repository);
-                });
+            () -> {
+                service.createPayment(new PaymentDTO(1L, 1L, null));
+                verifyNoInteractions(repository);
+            });
     }
 
     @Test

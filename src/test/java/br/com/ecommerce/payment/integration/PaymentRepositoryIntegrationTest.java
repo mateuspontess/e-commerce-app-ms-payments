@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageRequest;
 
+import br.com.ecommerce.payment.configs.MySQLTestContainerConfig;
 import br.com.ecommerce.payment.model.Payment;
 import br.com.ecommerce.payment.model.PaymentStatus;
 import br.com.ecommerce.payment.repository.PaymentRepository;

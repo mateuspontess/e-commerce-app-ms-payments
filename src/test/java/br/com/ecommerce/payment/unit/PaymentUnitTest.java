@@ -39,11 +39,11 @@ class PaymentUnitTest {
     @DisplayName("Unit - updatePaymentStatus - Cannot update from Canceled state")
     void updatePaymentStatusTest01() {
         Payment payment = Payment.builder()
-                .orderId(1L)
-                .userId(1L)
-                .status(PaymentStatus.CANCELED)
-                .paymentAmount(BigDecimal.TEN)
-                .build();
+            .orderId(1L)
+            .userId(1L)
+            .status(PaymentStatus.CANCELED)
+            .paymentAmount(BigDecimal.TEN)
+            .build();
 
         assertThrows(IllegalArgumentException.class, () -> payment.updatePaymentStatus(PaymentStatus.AWAITING));
         assertThrows(IllegalArgumentException.class, () -> payment.updatePaymentStatus(PaymentStatus.CONFIRMED));
@@ -53,11 +53,11 @@ class PaymentUnitTest {
     @DisplayName("Unit - updatePaymentStatus - Allowed update from Awaiting state")
     void updatePaymentStatusTest02() {
         Payment payment = Payment.builder()
-                .orderId(1L)
-                .userId(1L)
-                .status(PaymentStatus.AWAITING)
-                .paymentAmount(BigDecimal.TEN)
-                .build();
+            .orderId(1L)
+            .userId(1L)
+            .status(PaymentStatus.AWAITING)
+            .paymentAmount(BigDecimal.TEN)
+            .build();
 
         assertDoesNotThrow(() -> payment.updatePaymentStatus(PaymentStatus.AWAITING));
     }
