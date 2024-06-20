@@ -56,6 +56,6 @@ public class PaymentController {
 		PaymentConfirmDTO dto = new PaymentConfirmDTO(p.getOrderId(), PaymentStatus.CONFIRMED);
 		
 		template.convertAndSend("payments.ex", "", dto);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 	}
 }
