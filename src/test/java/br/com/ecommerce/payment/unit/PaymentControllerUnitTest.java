@@ -61,10 +61,12 @@ class PaymentControllerUnitTest {
 		)
 		// assert
 		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.content").isArray())
+		.andExpect(jsonPath("$.content").exists())
 		.andExpect(jsonPath("$.content[0].orderId").value(EXPECTED_ORDER_ID))
 		.andExpect(jsonPath("$.content[0].userId").value(EXPECTED_USER_ID))
 		.andExpect(jsonPath("$.content[0].paymentAmount").value(EXPECTED_PAYMENT_AMOUNT));
+
+		verify(service).getAllByParams(any(), any(), any(), any(), any(), any());
 	}
 
 	@Test
@@ -79,7 +81,7 @@ class PaymentControllerUnitTest {
 				.contentType(MediaType.APPLICATION_JSON)
 		)
 		// assert
-		.andExpect(status().isOk());
+		.andExpect(status().isNoContent());
 
 		verify(service).confirmPayment(anyLong());
 		verify(template).convertAndSend(anyString(), anyString(), any(PaymentConfirmDTO.class));
