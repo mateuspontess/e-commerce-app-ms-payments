@@ -1,4 +1,4 @@
-package br.com.ecommerce.payment.configs;
+package br.com.ecommerce.payment.testcontainers;
 
 import javax.sql.DataSource;
 
